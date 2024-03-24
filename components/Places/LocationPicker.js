@@ -14,8 +14,9 @@ import MapView, { Marker } from "react-native-maps";
 
 import OutlinedButton from "../UI/OutlinedButton";
 import { Colors } from "../../constants/colors";
+import { getAddress } from "../../util/location";
 
-function LocationPicker() {
+function LocationPicker({ onPickLocation }) {
   const [pickedLocation, setPickedLocation] = useState();
   const isFocused = useIsFocused();
 
@@ -34,6 +35,20 @@ function LocationPicker() {
       setPickedLocation(mapPickedLocation);
     }
   }, [route, isFocused]);
+
+  useEffect(() => {
+    async function handleLocation() {
+      if (pickedLocation) {
+        const address = await getAddress(
+          pickedLocation.lat,
+          pickedLocation.lng
+        );
+        onPickLocation({ ...pickedLocation, address: address });
+      }
+    }
+
+    handleLocation();
+  }, [pickedLocation, onPickLocation]);
 
   async function verifyPermissions() {
     if (
