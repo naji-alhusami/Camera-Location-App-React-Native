@@ -3,6 +3,7 @@ import PlaceItem from "./PlaceItem";
 import { Colors } from "../../constants/colors";
 
 function PlacesList({ places }) {
+  console.log("places in list:", places);
   if (!places || places.length === 0) {
     return (
       <View style={styles.fallbackContainer}>
