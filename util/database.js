@@ -80,8 +80,27 @@ export function fetchPlaces() {
             );
           }
 
-          console.log("places:", places);
           resolve(places);
+        },
+        (_, error) => {
+          reject(error);
+        }
+      );
+    });
+  });
+
+  return promise;
+}
+
+export function fetchPlaceDetails(id) {
+  const promise = new Promise((resolve, reject) => {
+    database.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM places WHERE id = ?",
+        [id],
+        (_, result) => {
+          console.log(result.rows._array[0]);
+          resolve(result.rows._array[0]);
         },
         (_, error) => {
           reject(error);

@@ -11,7 +11,6 @@ function AllPlaces({ route }) {
   useEffect(() => {
     async function loadPlaces() {
       const places = await fetchPlaces();
-      console.log("places in useEffect:", places);
       setLoadedPlaces(places);
     }
 
